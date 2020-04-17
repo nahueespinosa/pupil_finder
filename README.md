@@ -1,6 +1,6 @@
 # Pupil Finder
 
-This projects implements an ANN and trains it to predict the pupil position of an image of an eye.
+This projects implements an ANN and trains it to predict the pupil position in an image.
 
 ## Getting started
 
