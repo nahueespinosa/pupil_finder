@@ -15,13 +15,14 @@ def main(args):
     log.info("Loading data...")
     images, labels = load_data(args.labels, args.dataset)
 
-    log.info("Showing images... Press 'q' to quit.")
-    for image, label in zip(images, labels):
-        cv2.circle(image, label, 2, (255, 0, 0), 2)
-        cv2.imshow("Pupils", image)
+    if args.show:
+        log.info("Showing images... Press 'q' to quit.")
+        for image, label in zip(images, labels):
+            cv2.circle(image, label, 2, (255, 0, 0), 2)
+            cv2.imshow("Pupils", image)
 
-        if cv2.waitKey(1) == ord('q'):
-            break
+            if cv2.waitKey(1) == ord('q'):
+                break
 
 
 def load_config(path, default_level=logging.INFO):
@@ -75,5 +76,6 @@ if __name__ == '__main__':
     parser.add_argument('-c', dest='config', default='configuration.yml', help='configuration file')
     parser.add_argument('-l', dest='labels', default='dataset/pupil.txt', help='labels file')
     parser.add_argument('-d', dest='dataset', default='dataset', help='image dataset directory')
+    parser.add_argument('-s', '--show-database', dest='show', action='store_true', default=False, help='show database')
     main(parser.parse_args())
 
