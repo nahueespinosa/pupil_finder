@@ -1,41 +1,49 @@
-version: 1
-disable_existing_loggers: False
-formatters:
-  simple:
-    format: '%(levelname)s -- %(message)s'
-  precise:
-    format: '%(asctime)s -- %(levelname)s -- %(processName)s %(filename)s:%(lineno)s -- %(message)s'
+---
+general:
+  img_width: 100
+  img_height: 100
+  epochs: 10
+  test_size: 0.4
 
-handlers:
-  console:
-    class: logging.StreamHandler
-    level: DEBUG
-    formatter: simple
+logging:
+  version: 1
+  disable_existing_loggers: False
+  formatters:
+    simple:
+      format: '%(levelname)s -- %(message)s'
+    precise:
+      format: '%(asctime)s -- %(levelname)s -- %(processName)s %(filename)s:%(lineno)s -- %(message)s'
 
-  info_file_handler:
-    class: logging.handlers.RotatingFileHandler
+  handlers:
+    console:
+      class: logging.StreamHandler
+      level: DEBUG
+      formatter: simple
+
+    info_file_handler:
+      class: logging.handlers.RotatingFileHandler
+      level: INFO
+      formatter: precise
+      filename: info.log
+      maxBytes: 10485760 # 10MB
+      backupCount: 20
+      encoding: utf8
+
+    error_file_handler:
+      class: logging.handlers.RotatingFileHandler
+      level: ERROR
+      formatter: precise
+      filename: errors.log
+      maxBytes: 10485760 # 10MB
+      backupCount: 20
+      encoding: utf8
+
+  loggers:
+    main:
+      level: INFO
+      handlers: [console]
+      propagate: no
+
+  root:
     level: INFO
-    formatter: precise
-    filename: info.log
-    maxBytes: 10485760 # 10MB
-    backupCount: 20
-    encoding: utf8
-
-  error_file_handler:
-    class: logging.handlers.RotatingFileHandler
-    level: ERROR
-    formatter: precise
-    filename: errors.log
-    maxBytes: 10485760 # 10MB
-    backupCount: 20
-    encoding: utf8
-
-loggers:
-  main:
-    level: INFO
-    handlers: [console]
-    propagate: no
-
-root:
-  level: INFO
-  handlers: [console, info_file_handler, error_file_handler]
+    handlers: [console, info_file_handler, error_file_handler]
