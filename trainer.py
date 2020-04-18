@@ -91,6 +91,12 @@ class Trainer:
             # Add a hidden layer
             tf.keras.layers.Dense(500, activation="relu"),
 
+            # Add a hidden layer
+            tf.keras.layers.Dense(500, activation="relu"),
+
+            # Add a hidden layer
+            tf.keras.layers.Dense(50, activation="relu"),
+
             # Add an output layer with output units for both axis
             tf.keras.layers.Dense(2)
         ])
