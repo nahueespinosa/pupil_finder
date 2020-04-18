@@ -1,6 +1,6 @@
 # Pupil Finder
 
-This projects implements an ANN and trains it to predict the pupil position in an image.
+This projects implements an CNN and trains it to predict the pupil position in an image.
 
 ## Getting started
 
@@ -28,8 +28,8 @@ More information can be obtained [here](https://github.com/nahueespinosa/pupil_f
 ### Usage
 
 ```
-$ python train.py -h
-usage: train.py [-h] [-v] [-s] [-l LIMIT] filename
+$ python main.py -h
+usage: main.py [-h] [-v] [-l LIMIT] [-s] filename
 
 Train a CNN to identify pupil position.
 
@@ -39,13 +39,13 @@ positional arguments:
 optional arguments:
   -h, --help           show this help message and exit
   -v, --verbose        increase verbosity level
-  -s, --show-database  show database images before processing
   -l LIMIT             limit the number of images to load
+  -s, --show-database  show database images before processing
 ```
 
 ## Configuration
 
-Logging can be configured modifying the file `configuration.yml`.
+Logging and training parameters can be configured modifying the file `configuration.yml`.
 
 ## Acknowledgements
 
