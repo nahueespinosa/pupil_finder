@@ -47,6 +47,14 @@ optional arguments:
 
 Logging and training parameters can be configured modifying the file `configuration.yml`.
 
+```python
+training:
+  img_width: 100
+  img_height: 100
+  epochs: 30
+  test_size: 0.4
+```
+
 ## Acknowledgements
 
 The dataset was obtained [here](http://mrl.cs.vsb.cz/eyedataset) from the Media Research Lab (MRL) at the
