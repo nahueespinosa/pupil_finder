@@ -65,40 +65,32 @@ class Trainer:
         # Create a convolutional neural network
         model = tf.keras.models.Sequential([
 
-            # Convolutional layer. Learn 24 filters using a 3x3 kernel
+            # Convolutional layer. Learn 32 filters using a 3x3 kernel
             tf.keras.layers.Conv2D(
-                24,
+                32,
                 (3, 3),
+                strides=(2, 2),
                 activation="relu",
                 input_shape=(self.config['training']['img_width'], self.config['training']['img_height'], 3)
             ),
 
-            # Max-pooling layer, using 2x2 pool size
-            tf.keras.layers.MaxPooling2D(pool_size=(2, 2)),
+            # Convolutional layer. Learn 64 filters using a 3x3 kernel
+            tf.keras.layers.Conv2D(64, (3, 3), strides=(2, 2), activation="relu"),
 
-            # Convolutional layer. Learn 36 filters using a 3x3 kernel
-            tf.keras.layers.Conv2D(36, (3, 3), activation="relu"),
-
-            # Max-pooling layer, using 2x2 pool size
-            tf.keras.layers.MaxPooling2D(pool_size=(2, 2)),
-
-            # Convolutional layer. Learn 48 filters using a 3x3 kernel
-            tf.keras.layers.Conv2D(48, (3, 3), activation="relu"),
-
-            # Max-pooling layer, using 2x2 pool size
-            tf.keras.layers.MaxPooling2D(pool_size=(2, 2)),
+            # Convolutional layer. Learn 128 filters using a 3x3 kernel
+            tf.keras.layers.Conv2D(128, (3, 3), strides=(2, 2), activation="relu"),
 
             # Flatten units
             tf.keras.layers.Flatten(),
+
+            # Add a hidden layer
+            tf.keras.layers.Dense(2000, activation="relu"),
 
             # Add a hidden layer
             tf.keras.layers.Dense(1000, activation="relu"),
 
             # Add a hidden layer
             tf.keras.layers.Dense(500, activation="relu"),
-
-            # Add a hidden layer
-            tf.keras.layers.Dense(20, activation="relu"),
 
             # Add an output layer with output units for both axis
             tf.keras.layers.Dense(2)
