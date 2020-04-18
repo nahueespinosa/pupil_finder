@@ -28,17 +28,19 @@ More information can be obtained [here](https://github.com/nahueespinosa/pupil_f
 ### Usage
 
 ```
-$ python main.py -h
-usage: main.py [-h] [-v] [-c CONFIG] [-l LABELS] [-d DATASET]
+$ python train.py -h
+usage: train.py [-h] [-v] [-s] [-l LIMIT] filename
 
-Train an ANN to identify pupil position.
+Train a CNN to identify pupil position.
+
+positional arguments:
+  filename             name of the output file
 
 optional arguments:
-  -h, --help     show this help message and exit
-  -v, --verbose  increase verbosity level
-  -c CONFIG      configuration file
-  -l LABELS      labels file
-  -d DATASET     image dataset directory
+  -h, --help           show this help message and exit
+  -v, --verbose        increase verbosity level
+  -s, --show-database  show database images before processing
+  -l LIMIT             limit the number of images to load
 ```
 
 ## Configuration
