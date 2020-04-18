@@ -34,7 +34,7 @@ usage: main.py [-h] [-v] [-l LIMIT] [-s] filename
 Train a CNN to identify pupil position.
 
 positional arguments:
-  filename             name of the output file
+  filename             name of the output file (use *.h5 for HDF5 format)
 
 optional arguments:
   -h, --help           show this help message and exit
