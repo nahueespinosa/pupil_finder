@@ -29,18 +29,16 @@ def main():
             gray_frame, scaleFactor=1.1, minNeighbors=5
         )
 
-        pupil = (0, 0)
-
         for (x, y, h, w) in eyes:
             roi = gray_frame[y: y + h, x: x + w]
             roi = cv2.resize(roi, (128, 128), interpolation=cv2.INTER_AREA)
             roi = np.reshape(roi, (128, 128, 1))
             result = model.predict(np.array([roi]))
             pupil = (int(result[0][0])+x, int(result[0][1])+y)
-            cv2.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0), 1)
-            break
 
-        cv2.circle(frame, pupil, 2, (255, 0, 0), 2)
+            cv2.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0), 1)
+            cv2.circle(frame, pupil, 2, (255, 0, 0), 2)
+
         cv2.imshow("Video", frame)
 
         if cv2.waitKey(1) == ord('q'):
