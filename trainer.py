@@ -15,6 +15,10 @@ class Trainer:
         self.log = log
         self.images = list()
         self.labels = list()
+        self.img_width = config['training']['img_width']
+        self.img_height = config['training']['img_height']
+        self.epochs = config['training']['epochs']
+        self.test_size = config['training']['test_size']
 
     def load_data(self, labels_file, images_dir, limit):
         """
@@ -28,21 +32,19 @@ class Trainer:
                     break
 
                 self.log.debug(f"Loading {', '.join(row)}")
-                image = cv2.imread(os.path.join(images_dir, row[0]), cv2.IMREAD_COLOR)
+                image = cv2.imread(os.path.join(images_dir, row[0]), cv2.IMREAD_GRAYSCALE)
 
                 if image is None:
                     self.log.error(f"Could not read image '{row[0]}'")
                     raise FileNotFoundError(f"No such file or directory: '{row[0]}'")
 
-                height, width, layers = image.shape
-                image = cv2.resize(
-                    image,
-                    (self.config['training']['img_width'], self.config['training']['img_height']),
-                    interpolation=cv2.INTER_AREA
-                )
+                height, width = image.shape
+                image = cv2.resize(image, (self.img_width, self.img_height), interpolation=cv2.INTER_AREA)
                 y_ratio = image.shape[0] / height
                 x_ratio = image.shape[1] / width
                 pupil = (round(int(row[1]) * y_ratio), round(int(row[2]) * x_ratio))
+
+                image = np.reshape(image, (self.img_width, self.img_height, 1))
                 self.images.append(image)
                 self.labels.append(pupil)
 
@@ -60,7 +62,7 @@ class Trainer:
     def get_model(self):
         """
             Returns a compiled convolutional neural network model. Assume that the
-            `input_shape` of the first layer is `(IMG_WIDTH, IMG_HEIGHT, 3)`.
+            `input_shape` of the first layer is `(IMG_WIDTH, IMG_HEIGHT, 1)`.
         """
         # Create a convolutional neural network
         model = tf.keras.models.Sequential([
@@ -71,7 +73,7 @@ class Trainer:
                 (3, 3),
                 strides=(2, 2),
                 activation="relu",
-                input_shape=(self.config['training']['img_width'], self.config['training']['img_height'], 3)
+                input_shape=(self.img_width, self.img_height, 1)
             ),
 
             # Convolutional layer. Learn 64 filters using a 3x3 kernel
@@ -82,9 +84,6 @@ class Trainer:
 
             # Flatten units
             tf.keras.layers.Flatten(),
-
-            # Add a hidden layer
-            tf.keras.layers.Dense(2000, activation="relu"),
 
             # Add a hidden layer
             tf.keras.layers.Dense(1000, activation="relu"),
@@ -109,14 +108,14 @@ class Trainer:
 
         # Split data into training and testing sets
         x_train, x_test, y_train, y_test = train_test_split(
-            np.array(self.images), np.array(self.labels), test_size=self.config['training']['test_size']
+            np.array(self.images), np.array(self.labels), test_size=self.test_size
         )
 
         # Get a compiled neural network
         model = self.get_model()
 
         # Fit model on training data
-        model.fit(x_train, y_train, epochs=self.config['training']['epochs'])
+        model.fit(x_train, y_train, epochs=self.epochs)
 
         # Evaluate neural network performance
         model.evaluate(x_test, y_test, verbose=2)
