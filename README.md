@@ -1,6 +1,9 @@
 # Pupil Finder
 
-This projects implements an CNN and trains it to predict the pupil position in an image.
+This project implements an CNN and trains it to predict the pupil position in an image.
+
+![Demo Image](images/demo.png)
+
 
 ## Getting started
 
@@ -22,11 +25,12 @@ Install requirements:
 $ pip3 install -r requirements.txt
 ```
 
-Download the dataset and extract it in the repository.
+If you want to train your own models download the dataset and extract it in the repository.
 More information can be obtained [here](https://github.com/nahueespinosa/pupil_finder/tree/master/dataset).
 
 ### Usage
 
+To train a neural network use this command:
 ```
 $ python main.py -h
 usage: main.py [-h] [-v] [-l LIMIT] [-s] filename
@@ -41,6 +45,20 @@ optional arguments:
   -v, --verbose        increase verbosity level
   -l LIMIT             limit the number of images to load
   -s, --show-database  show database images before processing
+```
+
+To test a trained model with a camera you can use this script:
+```
+$ python test_model.py -h
+usage: test_model.py [-h] filename
+
+Test CNN to predict pupil position using a camera.
+
+positional arguments:
+  filename    name of the input model file
+
+optional arguments:
+  -h, --help  show this help message and exit
 ```
 
 ## Configuration

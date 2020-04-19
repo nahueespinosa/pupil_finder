@@ -1,4 +1,4 @@
-# Dataset
+# Pupil Finder: Dataset
 
 This dataset contains infrared images in low and high resolution, all captured in various lightning conditions and by
  different devices. The images are not in this repository and must be [downloaded](http://mrl.cs.vsb.cz/eyedataset)
