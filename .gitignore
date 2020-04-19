@@ -9,6 +9,3 @@ __pycache__
 
 # Log files
 *.log
-
-# Model files
-*.h5
