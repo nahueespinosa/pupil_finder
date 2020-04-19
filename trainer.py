@@ -40,11 +40,11 @@ class Trainer:
 
                 height, width = image.shape
                 image = cv2.resize(image, (self.img_width, self.img_height), interpolation=cv2.INTER_AREA)
+                image = np.reshape(image, (self.img_width, self.img_height, 1))
                 y_ratio = image.shape[0] / height
                 x_ratio = image.shape[1] / width
-                pupil = (round(int(row[1]) * y_ratio), round(int(row[2]) * x_ratio))
+                pupil = (round(int(row[1]) * x_ratio), round(int(row[2]) * y_ratio))
 
-                image = np.reshape(image, (self.img_width, self.img_height, 1))
                 self.images.append(image)
                 self.labels.append(pupil)
 
@@ -77,16 +77,16 @@ class Trainer:
             ),
 
             # Convolutional layer. Learn 64 filters using a 3x3 kernel
-            tf.keras.layers.Conv2D(64, (3, 3), strides=(2, 2), activation="relu"),
+            tf.keras.layers.Conv2D(64, (3, 3), strides=(3, 3), activation="relu"),
 
             # Convolutional layer. Learn 128 filters using a 3x3 kernel
-            tf.keras.layers.Conv2D(128, (3, 3), strides=(2, 2), activation="relu"),
+            tf.keras.layers.Conv2D(128, (3, 3), strides=(3, 3), activation="relu"),
 
             # Flatten units
             tf.keras.layers.Flatten(),
 
             # Add a hidden layer
-            tf.keras.layers.Dense(1000, activation="relu"),
+            tf.keras.layers.Dense(1500, activation="relu"),
 
             # Add a hidden layer
             tf.keras.layers.Dense(500, activation="relu"),
