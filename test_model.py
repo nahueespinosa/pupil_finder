@@ -31,10 +31,16 @@ def main():
 
         for (x, y, h, w) in eyes:
             roi = gray_frame[y: y + h, x: x + w]
+
+            height, width = roi.shape
             roi = cv2.resize(roi, (128, 128), interpolation=cv2.INTER_AREA)
             roi = np.reshape(roi, (128, 128, 1))
+
+            y_ratio = roi.shape[0] / height
+            x_ratio = roi.shape[1] / width
+
             result = model.predict(np.array([roi]))
-            pupil = (int(result[0][0])+x, int(result[0][1])+y)
+            pupil = (int(round(result[0][0] / x_ratio)) + x, int(round(result[0][1] / y_ratio)) + y)
 
             cv2.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0), 1)
             cv2.circle(frame, pupil, 2, (255, 0, 0), 2)
