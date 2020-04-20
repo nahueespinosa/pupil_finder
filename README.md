@@ -67,9 +67,9 @@ Logging and training parameters can be configured modifying the file `configurat
 
 ```python
 training:
-  img_width: 128
-  img_height: 128
-  epochs: 10
+  img_width: 64
+  img_height: 64
+  epochs: 50
   test_size: 0.4
 ```
 
